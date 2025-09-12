@@ -11,21 +11,28 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import yaml
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+with open(BASE_DIR / "secrets.yml") as f:
+    secrets = yaml.safe_load(f)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&q@eqyy85akn5jr+dj=@8t$02eo_#xx1s*_h-+p5w!0=bq87v^'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = secrets["django"]["secret_key"]
+DEBUG = secrets["django"]["debug"]
 
 ALLOWED_HOSTS = []
+
+MICROSERVICE_URL = "http://158.160.191.104:1488/process"
+
+AWS_STORAGE_BUCKET_NAME = secrets["s3"]["bucket"]
+AWS_STORAGE_REGION = secrets["s3"]["region"]
 
 
 # Application definition
@@ -37,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core',
+    #'visuals',
 ]
 
 MIDDLEWARE = [
@@ -73,9 +82,13 @@ WSGI_APPLICATION = 'gymguru.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": secrets["database"]["name"],
+        "USER": secrets["database"]["user"],
+        "PASSWORD": secrets["database"]["password"],
+        "HOST": secrets["database"]["host"],
+        "PORT": secrets["database"]["port"],
     }
 }
 
