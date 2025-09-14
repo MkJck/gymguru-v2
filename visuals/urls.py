@@ -1,6 +1,7 @@
-from django.urls import path
-from .views import timeline
+from rest_framework.routers import DefaultRouter
+from .views import KeyPhotoViewSet
 
-urlpatterns = [
-    path('timeline/', timeline, name='timeline'),
-]
+router = DefaultRouter()
+router.register(r'keyphoto', KeyPhotoViewSet, basename='keyphoto')
+
+urlpatterns = router.urls
