@@ -11,6 +11,7 @@ class KeyPhoto(models.Model):
     s3_path = models.CharField(max_length=512, db_index=True)
 
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
@@ -36,6 +37,7 @@ class Transition(models.Model):
     s3_path = models.CharField(max_length=512, db_index=True)
 
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
