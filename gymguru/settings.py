@@ -20,10 +20,7 @@ with open(BASE_DIR / "secrets.yml") as f:
     secrets = yaml.safe_load(f)
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = secrets["django"]["secret_key"]
 DEBUG = secrets["django"]["debug"]
 
@@ -35,8 +32,7 @@ AWS_STORAGE_BUCKET_NAME = secrets["s3"]["bucket"]
 AWS_STORAGE_REGION = secrets["s3"]["region"]
 
 
-# Application definition
-
+##################################
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+###################################
 
 ROOT_URLCONF = 'gymguru.urls'
 
@@ -135,3 +132,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+############
+### AUTH ###
+############
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
