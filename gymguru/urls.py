@@ -22,5 +22,6 @@ urlpatterns = [
     path('api/', include('core.urls')),
     path('api/', include('visuals.urls')),
     path('api/', include('timelines.urls')),
+    path('api/', include('workouts.urls')),
     path('api/token/', include('users.urls')),
 ]
