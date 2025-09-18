@@ -12,14 +12,13 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import yaml
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 with open(BASE_DIR / "secrets.yml") as f:
     secrets = yaml.safe_load(f)
-
-
 
 SECRET_KEY = secrets["django"]["secret_key"]
 DEBUG = secrets["django"]["debug"]
@@ -44,6 +43,8 @@ INSTALLED_APPS = [
     'visuals',
     'timelines',
     'rest_framework',
+    'workouts',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -144,4 +145,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(weeks=1),        # access token valid for 1 week
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=365),     # refresh token valid for ~1 year
+    "ROTATE_REFRESH_TOKENS": True,                     # rotate refresh tokens on use (recommended)
+    "BLACKLIST_AFTER_ROTATION": True,                  # blacklist used refresh tokens (recommended)
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
