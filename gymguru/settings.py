@@ -25,7 +25,9 @@ DEBUG = secrets["django"]["debug"]
 
 ALLOWED_HOSTS = []
 
-MICROSERVICE_URL = "http://158.160.191.104:1488/process"
+BEN2_URL = "http://158.160.183.95:8000/process"
+
+FILM_URL = "http://89.169.130.253:8000/"
 
 AWS_STORAGE_BUCKET_NAME = secrets["s3"]["bucket"]
 AWS_STORAGE_REGION = secrets["s3"]["region"]
@@ -148,9 +150,19 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(weeks=1),        # access token valid for 1 week
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=365),     # refresh token valid for ~1 year
+    "ACCESS_TOKEN_LIFETIME": timedelta(weeks=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=365),
     "ROTATE_REFRESH_TOKENS": True,                     # rotate refresh tokens on use (recommended)
     "BLACKLIST_AFTER_ROTATION": True,                  # blacklist used refresh tokens (recommended)
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+##############
+### CELERY ###
+##############
+
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"

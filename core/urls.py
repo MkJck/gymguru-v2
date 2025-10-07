@@ -1,9 +1,8 @@
 from django.urls import path
-from .views import test_download
-from .views import ProcessView
+from .views import ProcessView, task_status
 
 
 urlpatterns = [
-    path('test-download/', test_download, name='test_download'),
     path('process/', ProcessView.as_view(), name='process'),
+    path('status/<str:task_id>/', task_status),
 ]
